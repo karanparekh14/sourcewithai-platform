@@ -1,6 +1,6 @@
-# SourceWithAI â€” AI-Powered B2B Product Sourcing Platform
+# SourceWithAI - AI-Powered B2B Product Sourcing Platform
 
-> **Live at [sourcewithai.com](https://sourcewithai.com)** | Private repository â€” code available upon request
+> **Live at [sourcewithai.com](https://sourcewithai.com)** | Private repository - code available upon request
 
 SourceWithAI is a full-stack AI-powered e-commerce platform that connects businesses with global suppliers through conversational search, multi-platform aggregation, and intelligent product matching.
 
@@ -9,35 +9,35 @@ SourceWithAI is a full-stack AI-powered e-commerce platform that connects busine
 ## Architecture
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚                        NGINX                                â”‚
-â”‚              SSL / Reverse Proxy / Load Balancing            â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚                        â”‚                                    â”‚
-â”‚   sourcewithai.com     â”‚     apiv2.sourcewithai.com         â”‚
-â”‚         :3000          â”‚              :3003                  â”‚
-â”‚                        â”‚                                    â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”      â”‚      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”          â”‚
-â”‚  â”‚  Next.js 16  â”‚      â”‚      â”‚  Express.js API  â”‚          â”‚
-â”‚  â”‚  React 19    â”‚â—„â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â–ºâ”‚  40+ Services    â”‚          â”‚
-â”‚  â”‚  App Router  â”‚  RESTâ”‚ WS   â”‚  32 Route Files  â”‚          â”‚
-â”‚  â”‚  Tailwind    â”‚      â”‚      â”‚  Socket.io       â”‚          â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜      â”‚      â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜          â”‚
-â”‚                        â”‚               â”‚                    â”‚
-â”‚                        â”‚      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”          â”‚
-â”‚                        â”‚      â”‚  FastAPI (Py)    â”‚          â”‚
-â”‚                        â”‚      â”‚  AI Orchestrator â”‚          â”‚
-â”‚                        â”‚      â”‚       :8000      â”‚          â”‚
-â”‚                        â”‚      â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜          â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                                    â”‚
-                 â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-                 â”‚                  â”‚                  â”‚
-          â”Œâ”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”   â”Œâ”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”   â”Œâ”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”
-          â”‚  MongoDB    â”‚   â”‚   Redis     â”‚   â”‚Elasticsearchâ”‚
-          â”‚  16 Models  â”‚   â”‚  Cache/PubSubâ”‚   â”‚ AI-Enhanced â”‚
-          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚   Search    â”‚
-                                              â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
++-------------------------------------------------------------+
+|                        NGINX                                |
+|              SSL / Reverse Proxy / Load Balancing            |
++------------------------+------------------------------------+
+|                        |                                    |
+|   sourcewithai.com     |     apiv2.sourcewithai.com         |
+|         :3000          |              :3003                  |
+|                        |                                    |
+|  +--------------+      |      +------------------+          |
+|  |  Next.js 16  |      |      |  Express.js API  |          |
+|  |  React 19    |<-----+----->|  40+ Services    |          |
+|  |  App Router  |  REST| WS   |  32 Route Files  |          |
+|  |  Tailwind    |      |      |  Socket.io       |          |
+|  +--------------+      |      +--------+---------+          |
+|                        |               |                    |
+|                        |      +--------v---------+          |
+|                        |      |  FastAPI (Py)    |          |
+|                        |      |  AI Orchestrator |          |
+|                        |      |       :8000      |          |
+|                        |      +------------------+          |
++------------------------+------------------------------------+
+                                    |
+                 +------------------+------------------+
+                 |                  |                  |
+          +------v------+   +------v------+   +------v------+
+          |  MongoDB    |   |   Redis     |   |Elasticsearch|
+          |  16 Models  |   |  Cache/PubSub|   | AI-Enhanced |
+          +-------------+   +-------------+   |   Search    |
+                                              +-------------+
 ```
 
 ---
@@ -64,31 +64,35 @@ Multi-phase dialogue system that understands natural language product requests a
 
 ```
 User: "I need 500 custom printed tote bags for a conference"
-  â†“
+  |
+  v
 Intent Classification (GPT-4o-mini)
-  â†“
+  |
+  v
 Clarification: budget range? material preference? print method?
-  â†“
+  |
+  v
 Multi-Platform Search (OTAPI + 1688 + SAGE)
-  â†“
+  |
+  v
 AI-Ranked Results with Match Explanations
 ```
 
-**Phases:** Greeting â†’ Product Detection â†’ Clarification â†’ Search â†’ Confirmation
+**Phases:** Greeting > Product Detection > Clarification > Search > Confirmation
 
 ### Multi-Platform Product Aggregation
-- **OTAPI** â€” Alibaba ecosystem (Taobao, 1688, Tmall)
-- **Alibaba 1688 Direct** â€” Wholesale/Fenxiao platform
-- **SAGE** â€” US promotional products marketplace
+- **OTAPI** - Alibaba ecosystem (Taobao, 1688, Tmall)
+- **Alibaba 1688 Direct** - Wholesale/Fenxiao platform
+- **SAGE** - US promotional products marketplace
 - Unified search across all platforms with deduplication
 - Real-time inventory and pricing
 
 ### AI-Powered Search
 - **Semantic search** with vector embeddings (all-MiniLM-L6-v2)
 - **Elasticsearch** with AI query expansion (synonyms, variants, related terms)
-- **Image-based search** â€” upload a photo, find matching products
-- **Object detection** â€” identify products in images automatically
-- **RAG pipeline** â€” retrieval-augmented generation for contextual results
+- **Image-based search** - upload a photo, find matching products
+- **Object detection** - identify products in images automatically
+- **RAG pipeline** - retrieval-augmented generation for contextual results
 
 ### Vendor Intelligence
 - Premium vendor scoring algorithm (reviews, certifications, order history)
@@ -99,17 +103,17 @@ AI-Ranked Results with Match Explanations
 ### E-Commerce Workflow
 - Shopping cart with product configurations (size, color, material, customization)
 - Guest checkout and authenticated checkout flows
-- **RFQ (Request for Quote)** â€” B2B quotation system with admin approval workflow
+- **RFQ (Request for Quote)** - B2B quotation system with admin approval workflow
 - Stripe payment processing with fraud detection
 - Order tracking and management
 
 ### Additional Capabilities
-- **Product mockup generation** â€” AI-generated preview with logo/artwork placement
-- **Chinese â†” English translation** â€” automatic product translation
-- **Market signals** â€” trending products and keyword analytics
-- **Price intelligence** â€” cross-supplier price comparison
-- **Blog/content system** â€” SEO-optimized content management
-- **Bundle & coupon system** â€” promotional pricing tools
+- **Product mockup generation** - AI-generated preview with logo/artwork placement
+- **Chinese <> English translation** - automatic product translation
+- **Market signals** - trending products and keyword analytics
+- **Price intelligence** - cross-supplier price comparison
+- **Blog/content system** - SEO-optimized content management
+- **Bundle & coupon system** - promotional pricing tools
 
 ---
 
@@ -136,14 +140,14 @@ AI-Ranked Results with Match Explanations
 
 **16 Mongoose models** covering the full e-commerce lifecycle:
 
-- **User** â€” Auth, roles (user/admin/super_admin), address book, company info, preferences
-- **Product** â€” Multi-platform catalog with specs, pricing tiers, inventory tracking
-- **Order** â€” Full order lifecycle with guest support, payment status, shipping tracking
-- **RFQ** â€” B2B quote requests with admin approval workflow and auto-expiry
-- **Cart** â€” Session-based cart with product configurations and customization
-- **Payment** â€” Stripe integration with fraud risk scoring
-- **ChatHistory / Conversation / ConversationSession** â€” Multi-turn dialogue persistence
-- **Review, Blog, Bundle, Coupon** â€” Engagement and marketing features
+- **User** - Auth, roles (user/admin/super_admin), address book, company info, preferences
+- **Product** - Multi-platform catalog with specs, pricing tiers, inventory tracking
+- **Order** - Full order lifecycle with guest support, payment status, shipping tracking
+- **RFQ** - B2B quote requests with admin approval workflow and auto-expiry
+- **Cart** - Session-based cart with product configurations and customization
+- **Payment** - Stripe integration with fraud risk scoring
+- **ChatHistory / Conversation / ConversationSession** - Multi-turn dialogue persistence
+- **Review, Blog, Bundle, Coupon** - Engagement and marketing features
 
 ---
 
@@ -160,13 +164,13 @@ AI-Ranked Results with Match Explanations
 
 ## My Role
 
-**CTO / Lead Developer** â€” Designed and built the entire platform from scratch:
+**CTO / Lead Developer** - Designed and built the entire platform from scratch:
 
 - Architected the 3-service system (Next.js frontend + Express API + FastAPI AI service)
 - Built the multi-phase conversational AI sourcing engine
 - Integrated 3 supplier platforms (OTAPI, 1688, SAGE) with unified search
 - Implemented vector search (RAG), Elasticsearch, and multi-LLM orchestration
-- Built the full e-commerce workflow (cart â†’ checkout â†’ payment â†’ order tracking)
+- Built the full e-commerce workflow (cart > checkout > payment > order tracking)
 - Designed the RFQ system for B2B quotation management
 - Deployed and maintain production infrastructure (Nginx, PM2, VPS)
 
@@ -174,7 +178,7 @@ AI-Ranked Results with Match Explanations
 
 ## Status
 
-**Production** â€” Live and serving real B2B customers at [sourcewithai.com](https://sourcewithai.com)
+**Production** - Live and serving real B2B customers at [sourcewithai.com](https://sourcewithai.com)
 
 ---
 
