@@ -1,185 +1,146 @@
-# SourceWithAI - AI-Powered B2B Product Sourcing Platform
+# SourceWithAI, AI-powered B2B sourcing platform
 
-> **Live at [sourcewithai.com](https://sourcewithai.com)** | Private repository - code available upon request
+> **Live at [sourcewithai.com](https://sourcewithai.com)** · Private commercial repository, architecture shared here for portfolio purposes
 
-SourceWithAI is a full-stack AI-powered e-commerce platform that connects businesses with global suppliers through conversational search, multi-platform aggregation, and intelligent product matching.
+SourceWithAI is a production B2B sourcing platform. Buyers describe what they need in plain language, and the system works out what they actually mean, searches multiple supplier networks, filters aggressively, and returns a short list of products it can justify.
+
+The interesting engineering problem is not the chat interface. It is that supplier marketplace search APIs return large volumes of loosely relevant results, so the platform is built to **treat those APIs as raw data sources rather than as search engines**, and to do the ranking, filtering and judgement itself.
 
 ---
 
 ## Architecture
 
+Three services behind Nginx, split by what each one is good at.
+
 ```
-+-------------------------------------------------------------+
-|                        NGINX                                |
-|              SSL / Reverse Proxy / Load Balancing            |
-+------------------------+------------------------------------+
-|                        |                                    |
-|   sourcewithai.com     |     apiv2.sourcewithai.com         |
-|         :3000          |              :3003                  |
-|                        |                                    |
-|  +--------------+      |      +------------------+          |
-|  |  Next.js 16  |      |      |  Express.js API  |          |
-|  |  React 19    |<-----+----->|  40+ Services    |          |
-|  |  App Router  |  REST| WS   |  32 Route Files  |          |
-|  |  Tailwind    |      |      |  Socket.io       |          |
-|  +--------------+      |      +--------+---------+          |
-|                        |               |                    |
-|                        |      +--------v---------+          |
-|                        |      |  FastAPI (Py)    |          |
-|                        |      |  AI Orchestrator |          |
-|                        |      |       :8000      |          |
-|                        |      +------------------+          |
-+------------------------+------------------------------------+
-                                    |
-                 +------------------+------------------+
-                 |                  |                  |
-          +------v------+   +------v------+   +------v------+
-          |  MongoDB    |   |   Redis     |   |Elasticsearch|
-          |  16 Models  |   |  Cache/PubSub|   | AI-Enhanced |
-          +-------------+   +-------------+   |   Search    |
-                                              +-------------+
+                          Nginx (TLS, reverse proxy)
+                                     |
+        +----------------------------+----------------------------+
+        |                                                         |
+   Next.js 16 / React 19                                Express API (Node)
+   51 app routes                    <---- REST / WS ---->  50 route files
+   178 components                                          47 API domains
+                                                           294 handlers
+                                                           Socket.io
+                                                                 |
+                                                        Python FastAPI
+                                                        AI orchestration
+                                                                 |
+        +----------------------+----------------------+----------+
+        |                      |                      |
+    MongoDB                  Redis              Elasticsearch
+    35 models          cache, pub/sub, sessions   product search
 ```
+
+**Why three services.** The AI layer is Python native, the transactional and real-time layer is better in Node, and separating them means the AI service can be redeployed or restarted without touching checkout.
 
 ---
 
-## Tech Stack
+## The search pipeline
+
+The core of the product. A naive implementation sends the user's words to a supplier API and shows what comes back, which produces poor results because those APIs match on keywords rather than intent.
+
+Instead, search runs through a staged pipeline with a deliberate division of labour across models, each chosen for what it is good at rather than for being the strongest available.
+
+| Stage | Role | Why this model class |
+|---|---|---|
+| **Intent reasoning** | Understand the request, detect ambiguity, list possible meanings, score confidence | Fast and cheap, excellent at classification. Returns strict JSON and is instructed never to guess |
+| **Routing and category selection** | Decide search strategy, pick category codes, exclude irrelevant categories | Very fast and deterministic. Used as a classifier, not a creative model |
+| **Judgement and reranking** | Reject irrelevant products, rank the rest, score fit, explain the choice | Best buyer-style reasoning. Exactly **one call per query**, and it does no searching or routing |
+| **Response synthesis** | Explain the result set back to the user | Cheap and fast, no reasoning burden |
+
+**Dual-reality retrieval.** Rather than committing to one interpretation of an ambiguous request, the pipeline forks intent into two readings, one category-dominant and one attribute-dominant, runs both, then intersects them. Agreement between the two paths becomes a confidence signal. A deterministic eligibility filter runs before any model judgement, so obviously wrong products are eliminated by rules rather than by tokens. A final quality gate requires a minimum number of products above a confidence threshold before results are returned at all.
+
+The design principle behind it: **eliminate wrong products first rather than trying to understand everything perfectly.**
+
+---
+
+## Retrieval and ranking
+
+- **Elasticsearch** for product search, with AI-expanded queries so synonyms, variants and related terms are folded in before the query runs
+- **Vector embeddings** for semantic matching where the buyer describes an outcome rather than naming a product
+- **Hybrid ranking**, because lexical matching still wins on exact product names and part numbers while embeddings win on description
+- **Object detection** (DETR via transformers.js) for image search, so a buyer can upload a photo and have the product identified before searching
+- **Redis** caching for embeddings, hot queries and warmed result sets
+- Cross-network deduplication and unified ranking, since the same physical product appears under different titles, currencies and minimum order conventions depending on the source
+
+**Supplier networks integrated:** OTAPI fronting the Alibaba ecosystem (Taobao, 1688, Tmall), Alibaba 1688 direct for wholesale and Fenxiao, and SAGE for the US promotional products market. Each has a different schema, currency handling and minimum order convention, so normalising them into one catalogue was a larger job than the retrieval layer itself.
+
+---
+
+## Supplier intelligence
+
+Beyond search, the platform maintains a view of the supplier side.
+
+- Premium vendor scoring from reviews, certifications and order history
+- Supplier snapshots on a schedule, with change alerts
+- Competitor and cross-network price comparison
+- Minimum-order-quantity splitting across suppliers
+- Trending keyword and market signal tracking
+- Configurable product boost rules for merchandising
+
+---
+
+## Commerce and B2B workflow
+
+- Conversational sourcing sessions with multi-turn refinement and persisted context
+- Request for quote workflow with admin approval and expiry handling
+- Cart and checkout for both guest and authenticated buyers, with product configuration and customisation
+- Stripe payments with fraud risk scoring and webhook handling
+- Wholesale and direct-supplier order flows
+- Order tracking, reviews, support tickets, bundles, coupons and a points system
+- Product mockup generation for client previews, and automated deck rendering
+- Automatic translation of supplier product data
+- Notion sync for orders, quotes and trending data
+- Admin dashboard with analytics, user management and configuration
+
+---
+
+## Stack
 
 | Layer | Technologies |
-|-------|-------------|
-| **Frontend** | Next.js 16, React 19, Tailwind CSS 4, Framer Motion, Three.js, Spline 3D, Radix UI |
-| **Backend** | Express.js, Socket.io (WebSocket), Node.js 18+, PM2 |
-| **AI Service** | Python FastAPI, OpenAI GPT-4o-mini, Anthropic Claude, Google Gemini |
-| **Search** | Elasticsearch (AI-enhanced queries), Vector embeddings (Transformers.js, all-MiniLM-L6-v2), RAG |
-| **Database** | MongoDB (Mongoose ODM, 16 models), Redis (caching + pub/sub) |
-| **Payments** | Stripe (payment intents, webhooks, fraud detection) |
-| **Storage** | AWS S3, Cloudinary CDN, Vultr Object Storage |
-| **Infra** | Vultr VPS, Nginx reverse proxy, PM2 process management, dual-domain setup |
+|---|---|
+| **Frontend** | Next.js 16, React 19, Tailwind, Framer Motion, GSAP, Three.js, Spline, Radix UI, TipTap, Recharts, SWR |
+| **API** | Express, Socket.io, Mongoose, JWT and OAuth, Helmet, rate limiting, request validation, Winston, Swagger |
+| **AI services** | Python FastAPI, multi-provider orchestration across OpenAI, Anthropic and Google model families |
+| **Search** | Elasticsearch, vector embeddings, transformers.js for on-device vision |
+| **Data** | MongoDB, Redis, S3-compatible object storage |
+| **Media** | Sharp, HEIC conversion, Fabric.js, Puppeteer for server-side rendering |
+| **Payments** | Stripe |
+| **Ops** | Nginx, PM2, scheduled jobs, health checks for Elasticsearch and Redis |
 
 ---
 
-## Core Features
+## Scale
 
-### Conversational AI Sourcing
-Multi-phase dialogue system that understands natural language product requests and guides users from intent to purchase.
-
-```
-User: "I need 500 custom printed tote bags for a conference"
-  |
-  v
-Intent Classification (GPT-4o-mini)
-  |
-  v
-Clarification: budget range? material preference? print method?
-  |
-  v
-Multi-Platform Search (OTAPI + 1688 + SAGE)
-  |
-  v
-AI-Ranked Results with Match Explanations
-```
-
-**Phases:** Greeting > Product Detection > Clarification > Search > Confirmation
-
-### Multi-Platform Product Aggregation
-- **OTAPI** - Alibaba ecosystem (Taobao, 1688, Tmall)
-- **Alibaba 1688 Direct** - Wholesale/Fenxiao platform
-- **SAGE** - US promotional products marketplace
-- Unified search across all platforms with deduplication
-- Real-time inventory and pricing
-
-### AI-Powered Search
-- **Semantic search** with vector embeddings (all-MiniLM-L6-v2)
-- **Elasticsearch** with AI query expansion (synonyms, variants, related terms)
-- **Image-based search** - upload a photo, find matching products
-- **Object detection** - identify products in images automatically
-- **RAG pipeline** - retrieval-augmented generation for contextual results
-
-### Vendor Intelligence
-- Premium vendor scoring algorithm (reviews, certifications, order history)
-- Vendor type classification (Trading / Manufacturing / Workshop)
-- Verified merchant badges
-- Cross-platform vendor comparison
-
-### E-Commerce Workflow
-- Shopping cart with product configurations (size, color, material, customization)
-- Guest checkout and authenticated checkout flows
-- **RFQ (Request for Quote)** - B2B quotation system with admin approval workflow
-- Stripe payment processing with fraud detection
-- Order tracking and management
-
-### Additional Capabilities
-- **Product mockup generation** - AI-generated preview with logo/artwork placement
-- **Chinese <> English translation** - automatic product translation
-- **Market signals** - trending products and keyword analytics
-- **Price intelligence** - cross-supplier price comparison
-- **Blog/content system** - SEO-optimized content management
-- **Bundle & coupon system** - promotional pricing tools
+| | |
+|---|---|
+| API route files | 50 |
+| Mounted API domains | 47 |
+| Route handlers | 294 |
+| Backend services | 63 |
+| Data models | 35 |
+| Frontend routes | 51 |
+| React components | 178 |
 
 ---
 
-## API Surface
+## My role
 
-**50+ REST endpoints** across 10 domains:
+I own the data and AI layer of the platform and work alongside the engineering team on the rest of it. That covers:
 
-| Domain | Endpoints | Description |
-|--------|-----------|-------------|
-| `/api/search` | 15+ | Multi-platform search, image search, categories, vendor lookup |
-| `/api/chat` | 6 | Conversational AI with session management |
-| `/api/rfq` | 8 | B2B quotation workflow (guest + authenticated) |
-| `/api/orders` | 8 | Order management (guest + authenticated) |
-| `/api/cart` | 4 | Shopping cart operations |
-| `/api/payments` | 4 | Stripe payment processing + webhooks |
-| `/api/auth` | 7 | JWT auth, Google OAuth, email verification |
-| `/api/ai-search` | 4 | AI orchestration, intent detection, property extraction |
-| `/api/1688` | 4 | Alibaba 1688 direct integration |
-| `/api/admin` | 5+ | Dashboard analytics, user management |
-
----
-
-## Database Schema
-
-**16 Mongoose models** covering the full e-commerce lifecycle:
-
-- **User** - Auth, roles (user/admin/super_admin), address book, company info, preferences
-- **Product** - Multi-platform catalog with specs, pricing tiers, inventory tracking
-- **Order** - Full order lifecycle with guest support, payment status, shipping tracking
-- **RFQ** - B2B quote requests with admin approval workflow and auto-expiry
-- **Cart** - Session-based cart with product configurations and customization
-- **Payment** - Stripe integration with fraud risk scoring
-- **ChatHistory / Conversation / ConversationSession** - Multi-turn dialogue persistence
-- **Review, Blog, Bundle, Coupon** - Engagement and marketing features
-
----
-
-## AI Models Used
-
-| Model | Purpose |
-|-------|---------|
-| **GPT-4o-mini** | Conversation responses, intent classification, keyword generation, match explanations |
-| **Claude 3 Haiku** | Query enhancement, synonym expansion for Elasticsearch |
-| **Gemini 2.5** | Fallback query enhancement |
-| **all-MiniLM-L6-v2** | Vector embeddings for semantic search (Transformers.js) |
-
----
-
-## My Role
-
-**CTO / Lead Developer** - Designed and built the entire platform from scratch:
-
-- Architected the 3-service system (Next.js frontend + Express API + FastAPI AI service)
-- Built the multi-phase conversational AI sourcing engine
-- Integrated 3 supplier platforms (OTAPI, 1688, SAGE) with unified search
-- Implemented vector search (RAG), Elasticsearch, and multi-LLM orchestration
-- Built the full e-commerce workflow (cart > checkout > payment > order tracking)
-- Designed the RFQ system for B2B quotation management
-- Deployed and maintain production infrastructure (Nginx, PM2, VPS)
+- The search pipeline end to end: intent classification, retrieval strategy, the multi-model orchestration, ranking and the quality gate
+- Elasticsearch and vector retrieval, embeddings, and the caching layer that keeps query cost and latency down
+- Evaluation and production monitoring, including a labelled evaluation set built from real buyer queries, retrieval scoring with Ragas alongside precision, recall and F1, and per-request latency and token-cost tracking
+- The conversational sourcing engine and the agent workflows behind it
+- Supplier intelligence: scoring, snapshots, alerting and price comparison
+- The analytics layer, reporting pipelines and dashboards the business runs on
+- Access control and audit logging on customer-facing endpoints
 
 ---
 
 ## Status
 
-**Production** - Live and serving real B2B customers at [sourcewithai.com](https://sourcewithai.com)
+**In production**, serving real B2B customers.
 
----
-
-> *This is a private commercial project. The repository contains proprietary code and is not publicly available. Architecture details and technical approach are shared here for portfolio purposes. Code review available upon request during interviews.*
+> Private commercial repository. Source is not public. Architecture and technical approach are documented here for portfolio purposes; a code walkthrough is available on request during interviews.
