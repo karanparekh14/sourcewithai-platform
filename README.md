@@ -1,6 +1,10 @@
 # SourceWithAI, AI-powered B2B sourcing platform
 
-> **Live at [sourcewithai.com](https://sourcewithai.com)** · I led its data and AI layer until May 2026 · Private commercial repository, architecture shared here for portfolio purposes
+> **Live at [sourcewithai.com](https://sourcewithai.com)** · I led its technology until May 2026 · Private commercial repository, architecture shared here for portfolio purposes
+
+<p>
+<img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js"> <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React"> <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js"> <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express"> <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI"> <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"> <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white" alt="MongoDB"> <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis"> <img src="https://img.shields.io/badge/Elasticsearch-005571?style=flat-square&logo=elasticsearch&logoColor=white" alt="Elasticsearch"> <img src="https://img.shields.io/badge/Stripe-635BFF?style=flat-square&logo=stripe&logoColor=white" alt="Stripe"> <img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white" alt="Nginx"> <img src="https://img.shields.io/badge/Vultr-007BFC?style=flat-square&logo=vultr&logoColor=white" alt="Vultr"> <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel">
+</p>
 
 SourceWithAI is a production B2B sourcing platform. Buyers describe what they need in plain language, and the system works out what they actually mean, searches multiple supplier networks, filters aggressively, and returns a short list of products it can justify.
 
@@ -12,25 +16,10 @@ The interesting engineering problem is not the chat interface. It is that suppli
 
 Three services behind Nginx, split by what each one is good at.
 
-```
-                          Nginx (TLS, reverse proxy)
-                                     |
-        +----------------------------+----------------------------+
-        |                                                         |
-   Next.js 16 / React 19                                Express API (Node)
-   51 app routes                    <---- REST / WS ---->  50 route files
-   178 components                                          47 API domains
-                                                           294 handlers
-                                                           Socket.io
-                                                                 |
-                                                        Python FastAPI
-                                                        AI orchestration
-                                                                 |
-        +----------------------+----------------------+----------+
-        |                      |                      |
-    MongoDB                  Redis              Elasticsearch
-    35 models          cache, pub/sub, sessions   product search
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/architecture-dark.svg">
+  <img alt="SourceWithAI architecture: buyers and the Next.js front end on Vercel; Nginx, the Express API and the Python AI services on Vultr; MongoDB, Redis and Elasticsearch; supplier networks and model providers" src="assets/architecture-light.svg" width="100%">
+</picture>
 
 **Why three services.** The AI layer is Python native, the transactional and real-time layer is better in Node, and separating them means the AI service can be redeployed or restarted without touching checkout.
 
@@ -41,6 +30,11 @@ Three services behind Nginx, split by what each one is good at.
 The core of the product. A naive implementation sends the user's words to a supplier API and shows what comes back, which produces poor results because those APIs match on keywords rather than intent.
 
 Instead, search runs through a staged pipeline with a deliberate division of labour across models, each chosen for what it is good at rather than for being the strongest available.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/search-pipeline-dark.svg">
+  <img alt="The eight search stages: understand, route, two readings, search, filter by rules, judge and rerank, quality gate, explain" src="assets/search-pipeline-light.svg" width="100%">
+</picture>
 
 | Stage | Role | Why this model class |
 |---|---|---|
@@ -58,10 +52,9 @@ The design principle behind it: **eliminate wrong products first rather than try
 ## Retrieval and ranking
 
 - **Elasticsearch** for product search, with AI-expanded queries so synonyms, variants and related terms are folded in before the query runs
-- **Vector embeddings** for semantic matching where the buyer describes an outcome rather than naming a product
-- **Hybrid ranking**, because lexical matching still wins on exact product names and part numbers while embeddings win on description
 - **Object detection** (DETR via transformers.js) for image search, so a buyer can upload a photo and have the product identified before searching
-- **Redis** caching for embeddings, hot queries and warmed result sets
+- **Redis** result cache: fresh for 10 minutes, and served stale when a supplier network fails, so a transient timeout does not empty the page
+- **Deadlines and fallbacks**: a 3.5 second search deadline, and a circuit breaker on brand translation (DeepSeek) that falls back to Gemini
 - Cross-network deduplication and unified ranking, since the same physical product appears under different titles, currencies and minimum order conventions depending on the source
 
 **Supplier networks integrated:** OTAPI fronting the Alibaba ecosystem (Taobao, 1688, Tmall), Alibaba 1688 direct for wholesale and Fenxiao, and SAGE for the US promotional products market. Each has a different schema, currency handling and minimum order convention, so normalising them into one catalogue was a larger job than the retrieval layer itself.
@@ -101,13 +94,13 @@ Beyond search, the platform maintains a view of the supplier side.
 | Layer | Technologies |
 |---|---|
 | **Frontend** | Next.js 16, React 19, Tailwind, Framer Motion, GSAP, Three.js, Spline, Radix UI, TipTap, Recharts, SWR |
-| **API** | Express, Socket.io, Mongoose, JWT and OAuth, Helmet, rate limiting, request validation, Winston, Swagger |
-| **AI services** | Python FastAPI, multi-provider orchestration across OpenAI, Anthropic and Google model families |
-| **Search** | Elasticsearch, vector embeddings, transformers.js for on-device vision |
+| **API** | Express, Socket.io, Mongoose, JWT and OAuth, Helmet, rate limiting, Swagger |
+| **AI services** | Python FastAPI (async, Pydantic), one model per job across DeepSeek, Google, OpenAI and Anthropic |
+| **Search** | Elasticsearch with model query expansion, transformers.js (DETR) for image search |
 | **Data** | MongoDB, Redis, S3-compatible object storage |
 | **Media** | Sharp, HEIC conversion, Fabric.js, Puppeteer for server-side rendering |
 | **Payments** | Stripe |
-| **Ops** | Nginx, PM2, scheduled jobs, health checks for Elasticsearch and Redis |
+| **Ops** | Vercel (front end), Vultr (API and AI services), Nginx, PM2, deploy scripts, health checks for Elasticsearch and Redis |
 
 ---
 
@@ -115,10 +108,10 @@ Beyond search, the platform maintains a view of the supplier side.
 
 | | |
 |---|---|
-| API route files | 50 |
+| API route files | 52 |
 | Mounted API domains | 47 |
 | Route handlers | 294 |
-| Backend services | 63 |
+| Backend services | 61 |
 | Data models | 35 |
 | Frontend routes | 51 |
 | React components | 178 |
@@ -127,15 +120,15 @@ Beyond search, the platform maintains a view of the supplier side.
 
 ## My role
 
-Until May 2026 I owned the data and AI layer of the platform and worked alongside the engineering team on the rest of it. That covered:
+I led the platform's technology until May 2026, with two developers on the team working under my direction. What I personally built:
 
-- The search pipeline end to end: intent classification, retrieval strategy, the multi-model orchestration, ranking and the quality gate
-- Elasticsearch and vector retrieval, embeddings, and the caching layer that keeps query cost and latency down
-- Evaluation and production monitoring, including a labelled evaluation set built from real buyer queries, retrieval scoring with Ragas alongside precision, recall and F1, and per-request latency and token-cost tracking
-- The conversational sourcing engine and the agent workflows behind it
-- Supplier intelligence: scoring, snapshots, alerting and price comparison
-- The analytics layer, reporting pipelines and dashboards the business runs on
-- Access control and audit logging on customer-facing endpoints
+- **Search**: the search controller and the supplier integration with OTAPI, the core of how a request becomes products
+- **The Python AI services**: the FastAPI AI service and the orchestrator behind intent, routing, judging, reranking and synthesis
+- **Reliability**: the Redis serve-stale result cache, the search deadline fix (a new keyword went from about 11 seconds to 2 to 3), the circuit breaker and Gemini fallback on brand translation, and the fixes that followed production errors
+- **Deployment**: the deploy scripts, Nginx configs and PM2 setup on Vultr
+- **A search benchmark**: on two 100-keyword developer benchmarks, the share of searches returning products went from 76 to 99 percent. It is a smoke benchmark scored by keyword match, not a labelled evaluation.
+
+The Express routes, data models and most of the front end were written by the team under my direction.
 
 ---
 

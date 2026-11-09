@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="740" viewBox="0 0 1200 740" role="img" aria-label="SourceWithAI architecture: Next.js front end, Express API and Python AI services on Vultr, with MongoDB, Redis and Elasticsearch">
+<title>SourceWithAI architecture: Next.js front end, Express API and Python AI services on Vultr, with MongoDB, Redis and Elasticsearch</title>
+<rect width="1200" height="740" rx="16" fill="#0d1117" stroke="#30363d"/>
+<text x="40" y="54" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#e6edf3" text-anchor="start">How SourceWithAI is built</text>
+<text x="40" y="82" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="#9198a1" text-anchor="start">Three services behind Nginx, each in the language it suits best. The system as it stood in May 2026.</text>
+<text x="40" y="124" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#6e7681" text-anchor="start">BUYERS</text>
+<rect x="30" y="140" width="180" height="116" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="30" y="149" width="4" height="98" rx="2" fill="#58a6ff"/>
+<text x="46" y="165" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Buyer</text>
+<text x="46" y="187.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">describes a need in plain</text>
+<text x="46" y="205.46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">words, or uploads a photo</text>
+<text x="46" y="223.92000000000002" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">of the product</text>
+<rect x="30" y="276" width="180" height="172" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="30" y="285" width="4" height="154" rx="2" fill="#58a6ff"/>
+<text x="46" y="301" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Front end</text>
+<text x="46" y="323.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">Next.js 16 · React 19</text>
+<text x="46" y="341.46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">51 app routes</text>
+<text x="46" y="359.92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">178 components</text>
+<text x="46" y="378.38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">hosted on Vercel</text>
+<defs><marker id="arrow1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/></marker><marker id="arrow1s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/></marker></defs>
+<path d="M 120 256 L 120 272" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow1)"/>
+<rect x="236" y="108" width="604" height="604" rx="16" fill="#161b22" stroke="#30363d" stroke-width="1.2"/>
+<text x="256" y="130" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#6e7681" text-anchor="start">VULTR  ·  NGINX, PM2 AND DEPLOY SCRIPTS</text>
+<rect x="252" y="144" width="572" height="42" rx="10" fill="#0d2340" stroke="#58a6ff" stroke-width="1.2"/>
+<text x="268" y="171" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Nginx</text>
+<text x="322" y="171" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">TLS and reverse proxy in front of both services</text>
+<defs><marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/></marker><marker id="arrow2s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/></marker></defs>
+<path d="M 210 360 L 224 360 L 224 165 L 248 165" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow2)"/>
+<rect x="252" y="202" width="276" height="206" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="252" y="211" width="4" height="188" rx="2" fill="#2dd4bf"/>
+<text x="268" y="227" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Express API (Node)</text>
+<text x="268" y="249.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">52 route files · about 294 handlers</text>
+<text x="268" y="267.46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">35 Mongoose models · Socket.io</text>
+<text x="268" y="285.92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">JWT, Helmet, rate limiting</text>
+<text x="268" y="304.38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start"></text>
+<text x="268" y="322.84000000000003" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">search controller and supplier</text>
+<text x="268" y="341.3" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">integration · Stripe payments</text>
+<rect x="548" y="202" width="276" height="206" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="548" y="211" width="4" height="188" rx="2" fill="#b392f0"/>
+<text x="564" y="227" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">AI services (Python)</text>
+<text x="564" y="249.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">FastAPI, async, Pydantic</text>
+<text x="564" y="267.46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start"></text>
+<text x="564" y="285.92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">orchestrator: intent, routing,</text>
+<text x="564" y="304.38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">judging, reranking, synthesis</text>
+<text x="564" y="322.84000000000003" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start"></text>
+<text x="564" y="341.3" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#9198a1" text-anchor="start">conversation context for chat</text>
+<defs><marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#b392f0"/></marker><marker id="arrow3s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#b392f0"/></marker></defs>
+<path d="M 528 300 L 544 300" fill="none" stroke="#b392f0" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow3)"/>
+<text x="536" y="290" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#e6edf3" text-anchor="start"></text>
+<defs><marker id="arrow4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/></marker><marker id="arrow4s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/></marker></defs>
+<path d="M 390 186 L 390 198" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow4)"/>
+<defs><marker id="arrow5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/></marker><marker id="arrow5s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/></marker></defs>
+<path d="M 686 186 L 686 198" fill="none" stroke="#58a6ff" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow5)"/>
+<rect x="252" y="426" width="184" height="100" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="252" y="435" width="4" height="82" rx="2" fill="#f0b44c"/>
+<text x="268" y="451" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">MongoDB</text>
+<text x="268" y="473.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">orders, quotes, users,</text>
+<text x="268" y="490.75" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">chat history (Mongoose)</text>
+<defs><marker id="arrow6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f0b44c"/></marker><marker id="arrow6s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f0b44c"/></marker></defs>
+<path d="M 344 408 L 344 422" fill="none" stroke="#f0b44c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow6)"/>
+<rect x="446" y="426" width="184" height="100" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="446" y="435" width="4" height="82" rx="2" fill="#f0b44c"/>
+<text x="462" y="451" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Redis</text>
+<text x="462" y="473.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">search result cache,</text>
+<text x="462" y="490.75" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">pub/sub, sessions</text>
+<defs><marker id="arrow7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f0b44c"/></marker><marker id="arrow7s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f0b44c"/></marker></defs>
+<path d="M 538 408 L 538 422" fill="none" stroke="#f0b44c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow7)"/>
+<rect x="640" y="426" width="184" height="100" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="640" y="435" width="4" height="82" rx="2" fill="#f0b44c"/>
+<text x="656" y="451" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Elasticsearch</text>
+<text x="656" y="473.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">product search with</text>
+<text x="656" y="490.75" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">model query expansion</text>
+<defs><marker id="arrow8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f0b44c"/></marker><marker id="arrow8s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f0b44c"/></marker></defs>
+<path d="M 686 408 L 686 422" fill="none" stroke="#f0b44c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow8)"/>
+<rect x="252" y="542" width="572" height="154" rx="10" fill="#0d1117" stroke="#3fb950" stroke-width="1.4"/>
+<text x="268" y="568" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Reliability work</text>
+<circle cx="272" cy="589" r="3.5" fill="#3fb950"/>
+<text x="284" y="594" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">Redis result cache, fresh for 10 minutes and served stale when a provider fails</text>
+<circle cx="272" cy="615" r="3.5" fill="#3fb950"/>
+<text x="284" y="620" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">search deadline raised to 3.5 s: a new keyword went from about 11 s to 2 to 3 s</text>
+<circle cx="272" cy="641" r="3.5" fill="#3fb950"/>
+<text x="284" y="646" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">circuit breaker on brand translation (opens on 402 or 429, one probe), Gemini as fallback</text>
+<circle cx="272" cy="667" r="3.5" fill="#3fb950"/>
+<text x="284" y="672" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">deploy scripts, Nginx configs and PM2 process checks for every service</text>
+<text x="870" y="124" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#6e7681" text-anchor="start">OUTSIDE SERVICES</text>
+<rect x="860" y="140" width="310" height="150" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="860" y="149" width="4" height="132" rx="2" fill="#2dd4bf"/>
+<text x="876" y="165" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Supplier networks</text>
+<text x="876" y="187.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">called by the Express API:</text>
+<text x="876" y="204.75" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">OTAPI: Taobao, 1688, Tmall</text>
+<text x="876" y="222.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">Alibaba 1688 direct (wholesale)</text>
+<text x="876" y="240.25" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">SAGE: US promotional products</text>
+<rect x="860" y="306" width="310" height="190" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="860" y="315" width="4" height="172" rx="2" fill="#b392f0"/>
+<text x="876" y="331" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Model providers, one per job</text>
+<text x="876" y="353.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">DeepSeek: intent, brand translation</text>
+<text x="876" y="370.75" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">Gemini: routing, categories, answer</text>
+<text x="876" y="388.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">  synthesis, translation fallback</text>
+<text x="876" y="406.25" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">GPT-4o: judging and reranking</text>
+<text x="876" y="424.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">Claude Haiku: search query expansion</text>
+<text x="876" y="441.75" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">OpenAI embeddings: chat context</text>
+<rect x="860" y="512" width="310" height="84" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="860" y="521" width="4" height="66" rx="2" fill="#2dd4bf"/>
+<text x="876" y="537" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Stripe</text>
+<text x="876" y="559.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">payments, fraud scoring, webhooks</text>
+<rect x="860" y="612" width="310" height="84" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
+<rect x="860" y="621" width="4" height="66" rx="2" fill="#f0b44c"/>
+<text x="876" y="637" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#e6edf3" text-anchor="start">Object storage</text>
+<text x="876" y="659.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9198a1" text-anchor="start">S3-compatible, media and assets</text>
+</svg>
