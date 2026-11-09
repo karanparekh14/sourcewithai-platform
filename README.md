@@ -1,6 +1,6 @@
 # SourceWithAI, AI-powered B2B sourcing platform
 
-> **Live at [sourcewithai.com](https://sourcewithai.com)** · Private commercial repository, architecture shared here for portfolio purposes
+> **Live at [sourcewithai.com](https://sourcewithai.com)** · I led its data and AI layer until May 2026 · Private commercial repository, architecture shared here for portfolio purposes
 
 SourceWithAI is a production B2B sourcing platform. Buyers describe what they need in plain language, and the system works out what they actually mean, searches multiple supplier networks, filters aggressively, and returns a short list of products it can justify.
 
@@ -127,7 +127,7 @@ Beyond search, the platform maintains a view of the supplier side.
 
 ## My role
 
-I own the data and AI layer of the platform and work alongside the engineering team on the rest of it. That covers:
+Until May 2026 I owned the data and AI layer of the platform and worked alongside the engineering team on the rest of it. That covered:
 
 - The search pipeline end to end: intent classification, retrieval strategy, the multi-model orchestration, ranking and the quality gate
 - Elasticsearch and vector retrieval, embeddings, and the caching layer that keeps query cost and latency down
@@ -141,6 +141,6 @@ I own the data and AI layer of the platform and work alongside the engineering t
 
 ## Status
 
-**In production**, serving real B2B customers.
+**Live** at [sourcewithai.com](https://sourcewithai.com). My role on the platform ended in May 2026, and this page describes the system as it stood then.
 
 > Private commercial repository. Source is not public. Architecture and technical approach are documented here for portfolio purposes; a code walkthrough is available on request during interviews.
