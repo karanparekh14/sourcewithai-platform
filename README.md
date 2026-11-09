@@ -1,6 +1,6 @@
 # SourceWithAI, AI-powered B2B sourcing platform
 
-> **Live at [sourcewithai.com](https://sourcewithai.com)** · I led its technology until May 2026 · Private commercial repository, architecture shared here for portfolio purposes
+> **Live at [sourcewithai.com](https://sourcewithai.com)** · I led its technology until June 2026 · Private commercial repository, architecture shared here for portfolio purposes
 
 <p>
 <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js"> <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React"> <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js"> <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express"> <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI"> <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"> <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white" alt="MongoDB"> <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis"> <img src="https://img.shields.io/badge/Elasticsearch-005571?style=flat-square&logo=elasticsearch&logoColor=white" alt="Elasticsearch"> <img src="https://img.shields.io/badge/Stripe-635BFF?style=flat-square&logo=stripe&logoColor=white" alt="Stripe"> <img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white" alt="Nginx"> <img src="https://img.shields.io/badge/Vultr-007BFC?style=flat-square&logo=vultr&logoColor=white" alt="Vultr"> <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel">
@@ -120,7 +120,7 @@ Beyond search, the platform maintains a view of the supplier side.
 
 ## My role
 
-I led the platform's technology until May 2026, with two developers on the team working under my direction. What I personally built:
+I led the platform's technology until June 2026, with two developers on the team working under my direction. What I personally built:
 
 - **Search**: the search controller and the supplier integration with OTAPI, the core of how a request becomes products
 - **The Python AI services**: the FastAPI AI service and the orchestrator behind intent, routing, judging, reranking and synthesis
@@ -134,6 +134,6 @@ The Express routes, data models and most of the front end were written by the te
 
 ## Status
 
-**Live** at [sourcewithai.com](https://sourcewithai.com). My role on the platform ended in May 2026, and this page describes the system as it stood then.
+**Live** at [sourcewithai.com](https://sourcewithai.com). My role on the platform ended in June 2026, and this page describes the system as it stood then.
 
 > Private commercial repository. Source is not public. Architecture and technical approach are documented here for portfolio purposes; a code walkthrough is available on request during interviews.

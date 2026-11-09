@@ -2,7 +2,7 @@
 <title>SourceWithAI architecture: Next.js front end, Express API and Python AI services on Vultr, with MongoDB, Redis and Elasticsearch</title>
 <rect width="1200" height="740" rx="16" fill="#0d1117" stroke="#30363d"/>
 <text x="40" y="54" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#e6edf3" text-anchor="start">How SourceWithAI is built</text>
-<text x="40" y="82" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="#9198a1" text-anchor="start">Three services behind Nginx, each in the language it suits best. The system as it stood in May 2026.</text>
+<text x="40" y="82" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="#9198a1" text-anchor="start">Three services behind Nginx, each in the language it suits best. The system as it stood in June 2026.</text>
 <text x="40" y="124" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#6e7681" text-anchor="start">BUYERS</text>
 <rect x="30" y="140" width="180" height="116" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.2"/>
 <rect x="30" y="149" width="4" height="98" rx="2" fill="#58a6ff"/>
